@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palvi Delights — Instant to Traditional, Taste in Every Bite</title>
+<meta name="description" content="Palvi Delights by Palvi Millmix: authentic Maharashtrian instant food premixes — Idli Pith, Thalipith Bhajni, Dhokla Premix, Dal Batti Premix. No added preservatives. Order on WhatsApp.">
+<meta property="og:title" content="Palvi Delights — Traditional Taste, Instantly">
+<meta property="og:description" content="Authentic Maharashtrian food premixes, milled fresh in small batches. Order on WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Work+Sans:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #F6EEDC;
+    --cream-card: #FFFBF3;
+    --maroon: #7A1F2B;
+    --maroon-deep: #5A1620;
+    --green: #1B4332;
+    --brass: #B8863B;
+    --brass-light: #D9B36C;
+    --ink: #2B2118;
+    --ink-soft: #5A4F42;
+    --line: #E4D6B8;
+    --shadow: 0 12px 30px rgba(90, 22, 32, 0.10);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3{font-family:'Fraunces', serif; margin:0; color:var(--maroon-deep);}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-family:'Caveat', cursive;
+    font-size:1.4rem;
+    color:var(--brass);
+    display:inline-block;
+    margin-bottom:4px;
+  }
+  /* subtle scroll reveal */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,238,220,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 24px;}
+  .logo{display:flex; align-items:center;}
+  .logo-img{height:64px; width:auto; display:block; filter:drop-shadow(0 3px 8px rgba(90,22,32,.18));}
+  .logo-mark{font-family:'Fraunces', serif; font-weight:700; font-style:italic; font-size:1.7rem; color:var(--maroon);}
+  .logo-sub{font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--green); font-weight:600;}
+  nav.links{display:flex; gap:28px; font-weight:500; font-size:.95rem;}
+  nav.links a{position:relative; padding-bottom:3px;}
+  nav.links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--brass);transition:width .25s ease;}
+  nav.links a:hover::after{width:100%;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--green); color:#fff;
+    padding:11px 20px; border-radius:999px;
+    font-weight:600; font-size:.92rem;
+    box-shadow:var(--shadow);
+    border:none; cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px); box-shadow:0 16px 34px rgba(27,67,50,.22);}
+  .btn.ghost{background:transparent; color:var(--maroon-deep); border:1.5px solid var(--maroon-deep); box-shadow:none;}
+  .btn.ghost:hover{background:var(--maroon-deep); color:#fff;}
+  .btn svg{width:18px;height:18px;flex:none;}
+  .mobile-toggle{display:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative; overflow:hidden; padding:64px 0 40px;}
+  .hero .wrap{display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center;}
+  .hero-ring{
+    position:absolute; width:640px; height:640px; border-radius:50%;
+    border:1px dashed var(--brass); opacity:.35;
+    top:-220px; right:-220px;
+  }
+  .hero h1{font-size:3.1rem; line-height:1.08; letter-spacing:-.01em;}
+  .hero h1 em{font-style:italic; color:var(--maroon);}
+  .hero p.lead{margin:20px 0 30px; font-size:1.08rem; color:var(--ink-soft); max-width:46ch;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .thali-frame{
+    position:relative; width:100%; aspect-ratio:1/1; border-radius:50%;
+    background:conic-gradient(from 210deg, var(--brass-light), var(--brass), #8a6323, var(--brass-light));
+    padding:10px; box-shadow:0 26px 60px rgba(90,22,32,.22);
+  }
+  .thali-frame .inner{
+    width:100%; height:100%; border-radius:50%; overflow:hidden;
+    border:3px solid var(--cream-card);
+  }
+  .thali-frame .inner img{width:100%;height:100%;object-fit:cover; transform:scale(1.02);}
+  .hero-badge{
+    position:absolute; bottom:-14px; left:-14px;
+    background:var(--maroon); color:#fff;
+    padding:12px 18px; border-radius:16px;
+    font-family:'Fraunces',serif; font-weight:600; font-size:.95rem;
+    box-shadow:var(--shadow); line-height:1.25;
+  }
+  .hero-badge span{display:block; font-family:'Work Sans',sans-serif; font-weight:400; font-size:.72rem; opacity:.85; text-transform:uppercase; letter-spacing:.08em;}
+
+  .double-rule{width:64px; height:8px; margin:0 auto; position:relative;}
+  .double-rule::before,.double-rule::after{content:'';position:absolute; left:0; right:0; height:1px; background:var(--brass);}
+  .double-rule::before{top:0;}
+  .double-rule::after{bottom:0;}
+  .double-rule.left{margin:0;}
+
+  /* ---------- SHOWCASE / SCROLLER ---------- */
+  .showcase{padding:70px 0; background:var(--cream-card); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .carousel{display:flex; flex-direction:column; align-items:center; gap:20px;}
+  .carousel-frame{
+    position:relative; width:560px; height:560px; border-radius:50%;
+    padding:14px; box-shadow:var(--shadow);
+    background:conic-gradient(from 210deg, var(--brass-light), var(--brass), #8a6323, var(--brass-light));
+  }
+  .carousel-frame .mask{position:relative; width:100%; height:100%; border-radius:50%; overflow:hidden; border:5px solid var(--cream-card);}
+  .carousel-frame .slide{position:absolute; inset:0; opacity:0; transition:opacity 1s ease;}
+  .carousel-frame .slide.active{opacity:1;}
+  .carousel-frame .slide img{width:100%; height:100%; object-fit:cover; object-position:50% 50%;}
+  .carousel-frame .slide.slide-idli img{object-position:50% 40%;}
+  .carousel-caption{
+    font-family:'Fraunces',serif; font-weight:600; font-size:1.5rem; color:var(--maroon-deep);
+    min-height:1.6em;
+  }
+  .carousel-dots{display:flex; gap:10px;}
+  .carousel-dots .dot{
+    width:10px; height:10px; border-radius:50%; border:none; padding:0;
+    background:var(--line); cursor:pointer; transition:background .25s ease, transform .25s ease;
+  }
+  .carousel-dots .dot.active{background:var(--maroon); transform:scale(1.25);}
+
+  /* ---------- PACKAGING SCROLLER ---------- */
+  .packaging{padding:70px 0; background:var(--cream); border-bottom:1px solid var(--line);}
+  .pack-scroll{
+    display:flex; gap:24px; overflow-x:auto; padding:10px 4px 22px;
+    scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+  }
+  .pack-scroll::-webkit-scrollbar{height:9px;}
+  .pack-scroll::-webkit-scrollbar-track{background:var(--line); border-radius:10px;}
+  .pack-scroll::-webkit-scrollbar-thumb{background:var(--brass); border-radius:10px;}
+  .pack-card{
+    flex:0 0 auto; scroll-snap-align:start;
+    background:var(--cream-card); border:1px solid var(--line); border-radius:16px;
+    box-shadow:var(--shadow); overflow:hidden;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .pack-card:hover{transform:translateY(-6px); box-shadow:0 20px 40px rgba(90,22,32,.18);}
+  .pack-card img{height:520px; width:auto; display:block;}
+  .pack-hint{
+    text-align:center; font-size:.85rem; color:var(--ink-soft);
+    margin-top:4px; font-style:italic;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about{padding:70px 0; background:var(--cream-card); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .about .wrap{display:grid; grid-template-columns: .9fr 1.1fr; gap:56px; align-items:center;}
+  .about h2{font-size:2.1rem; margin-bottom:18px;}
+  .about p{color:var(--ink-soft); max-width:56ch;}
+  .about-stats{display:flex; gap:34px; margin-top:28px; flex-wrap:wrap;}
+  .stat b{display:block; font-family:'Fraunces',serif; font-size:1.9rem; color:var(--maroon);}
+  .stat span{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft);}
+  .about-visual{position:relative;}
+  .leaf-frame{border-radius:22px; overflow:hidden; box-shadow:var(--shadow); border:6px solid var(--cream-card); outline:2px solid var(--line);}
+  .leaf-frame img{width:100%; height:340px; object-fit:cover;}
+
+  /* ---------- PRODUCTS ---------- */
+  .products{padding:80px 0;}
+  .section-head{text-align:center; margin-bottom:50px;}
+  .section-head h2{font-size:2.3rem;}
+  .section-head p{color:var(--ink-soft); margin-top:10px;}
+  .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:30px;}
+  .card{
+    position:relative;
+    background:var(--cream-card); border:1px solid var(--line); border-radius:20px;
+    padding:28px; display:flex; gap:22px; box-shadow:var(--shadow);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .bestseller-badge{
+    position:absolute; top:-12px; right:22px;
+    background:var(--brass); color:#3a2a0d;
+    font-family:'Work Sans',sans-serif; font-weight:700; font-size:.72rem;
+    letter-spacing:.03em; padding:6px 14px; border-radius:999px;
+    box-shadow:0 8px 16px rgba(184,134,59,.35); border:2px solid var(--cream-card);
+  }
+  .card:hover{transform:translateY(-4px); box-shadow:0 20px 46px rgba(90,22,32,.16);}
+  .card-media{flex:none; width:132px;}
+  .card-thali{width:132px; height:132px; border-radius:50%; padding:6px;
+    background:conic-gradient(from 210deg, var(--brass-light), var(--brass), #8a6323, var(--brass-light));}
+  .card-thali .inner{width:100%; height:100%; border-radius:50%; overflow:hidden; border:2px solid var(--cream-card);}
+  .card-thali img{width:100%;height:100%;object-fit:cover;}
+  .card-body{flex:1; min-width:0;}
+  .card-top{display:flex; justify-content:space-between; align-items:baseline; gap:10px;}
+  .card-body h3{font-size:1.28rem; line-height:1.25;}
+  .price{font-family:'Fraunces',serif; font-weight:600; color:var(--maroon); white-space:nowrap;}
+  .pack{display:inline-block; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--green); background:rgba(27,67,50,.08); padding:3px 9px; border-radius:999px; margin:6px 0 10px;}
+  .card-body p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 12px;}
+  details{border-top:1px dashed var(--line); padding-top:8px; margin-top:6px;}
+  details summary{cursor:pointer; font-size:.86rem; font-weight:600; color:var(--maroon-deep); list-style:none; display:flex; align-items:center; gap:6px; padding:4px 0;}
+  details summary::-webkit-details-marker{display:none;}
+  details summary::before{content:'+'; font-family:'Fraunces',serif; font-size:1.1rem; color:var(--brass); width:14px;}
+  details[open] summary::before{content:'–';}
+  details .content{font-size:.86rem; color:var(--ink-soft); padding:6px 2px 10px 20px;}
+  details ol,details ul{margin:6px 0; padding-left:18px;}
+  .card-actions{margin-top:14px; display:flex;}
+  .btn-sm{
+    display:inline-flex; align-items:center; gap:7px;
+    background:var(--maroon); color:#fff; padding:9px 16px; border-radius:999px;
+    font-size:.84rem; font-weight:600; box-shadow:0 8px 18px rgba(122,31,43,.22);
+  }
+  .btn-sm svg{width:15px;height:15px;}
+  .btn-sm:hover{background:var(--maroon-deep);}
+
+  /* ---------- FEATURES ---------- */
+  .features{background:var(--green); color:#fff; padding:70px 0;}
+  .features .section-head h2, .features .section-head p{color:#fff;}
+  .features .section-head p{opacity:.8;}
+  .feat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .feat{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:16px; padding:26px;}
+  .feat svg{width:30px;height:30px; color:var(--brass-light); margin-bottom:14px;}
+  .feat h3{color:#fff; font-size:1.08rem; margin-bottom:6px;}
+  .feat p{color:rgba(255,255,255,.78); font-size:.9rem; margin:0;}
+
+  /* ---------- HOW TO ORDER ---------- */
+  .order-steps{padding:80px 0;}
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:30px; counter-reset:step;}
+  .step{position:relative; padding:34px 24px 24px; background:var(--cream-card); border:1px solid var(--line); border-radius:18px; text-align:center;}
+  .step-num{
+    width:44px;height:44px;border-radius:50%; margin:0 auto 16px;
+    background:var(--maroon); color:#fff; display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem;
+  }
+  .step h3{font-size:1.08rem; margin-bottom:8px;}
+  .step p{color:var(--ink-soft); font-size:.92rem; margin:0;}
+  .step-arrow{position:absolute; top:44px; right:-26px; color:var(--brass); font-size:1.4rem;}
+  .step:last-child .step-arrow{display:none;}
+
+  /* ---------- ENQUIRY FORM ---------- */
+  .enquire{background:var(--cream-card); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:80px 0;}
+  .enquire .wrap{display:grid; grid-template-columns:.85fr 1.15fr; gap:56px; align-items:flex-start;}
+  .enquire h2{font-size:2.1rem;}
+  .enquire p.lead{color:var(--ink-soft); margin-top:14px; max-width:40ch;}
+  .form-card{background:#fff; border:1px solid var(--line); border-radius:20px; padding:32px; box-shadow:var(--shadow);}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;}
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field.full{grid-column:1/-1;}
+  label{font-size:.82rem; font-weight:600; color:var(--maroon-deep);}
+  input,select,textarea{
+    font-family:'Work Sans',sans-serif; font-size:.95rem;
+    padding:11px 13px; border-radius:10px; border:1.5px solid var(--line);
+    background:var(--cream); color:var(--ink); outline:none;
+    transition:border-color .2s ease;
+  }
+  input:focus,select:focus,textarea:focus{border-color:var(--brass);}
+  textarea{resize:vertical; min-height:80px;}
+  .form-submit{width:100%; justify-content:center; margin-top:6px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--maroon-deep); color:rgba(255,255,255,.85); padding:56px 0 26px;}
+  .foot-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:40px; margin-bottom:36px;}
+  footer h4{color:#fff; font-family:'Fraunces',serif; font-size:1.1rem; margin-bottom:14px;}
+  footer .foot-logo{font-family:'Fraunces',serif; font-style:italic; font-weight:700; font-size:1.6rem; color:#fff; margin-bottom:10px; display:block;}
+  .foot-logo-wrap{background:var(--cream-card); display:inline-block; padding:14px 22px; border-radius:14px; margin-bottom:16px; box-shadow:0 10px 24px rgba(0,0,0,.2);}
+  .foot-logo-wrap img{height:52px; width:auto; display:block;}
+  footer p{font-size:.9rem; color:rgba(255,255,255,.68); margin:0 0 6px;}
+  footer a.foot-link{display:block; font-size:.9rem; color:rgba(255,255,255,.78); margin-bottom:8px;}
+  footer a.foot-link:hover{color:var(--brass-light);}
+  .socials{display:flex; gap:12px; margin-top:14px;}
+  .socials a{width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; transition:background .2s ease;}
+  .socials a:hover{background:var(--brass);}
+  .socials svg{width:17px; height:17px; color:#fff;}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.14); padding-top:20px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:.8rem; color:rgba(255,255,255,.55);}
+
+  /* ---------- FLOATING WHATSAPP ---------- */
+  .float-wa{
+    position:fixed; bottom:24px; right:24px; z-index:60;
+    width:60px; height:60px; border-radius:50%;
+    background:#25D366; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 28px rgba(37,211,102,.4);
+  }
+  .float-wa svg{width:30px;height:30px; color:#fff;}
+  .float-wa::before{
+    content:''; position:absolute; inset:0; border-radius:50%;
+    background:#25D366; animation:pulse 2.2s ease-out infinite; z-index:-1;
+  }
+  @keyframes pulse{0%{transform:scale(1); opacity:.55;} 100%{transform:scale(1.7); opacity:0;}}
+
+  @media (max-width: 900px){
+    .nav .links, .nav .btn.ghost-desktop{display:none;}
+    .hero .wrap, .about .wrap, .enquire .wrap{grid-template-columns:1fr;}
+    .hero{padding:40px 0 20px;}
+    .hero h1{font-size:2.3rem;}
+    .thali-frame{max-width:320px; margin:0 auto;}
+    .carousel-frame{width:320px; height:320px;}
+    .about-visual{order:-1;}
+    .grid{grid-template-columns:1fr;}
+    .feat-grid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+    .step-arrow{display:none;}
+    .form-row{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr; gap:28px;}
+    .card{flex-direction:column;}
+    .card-media{width:100%; display:flex; justify-content:center;}
+    .pack-card img{height:360px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{transition:none; opacity:1; transform:none;}
+    .float-wa::before{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav wrap">
+    <div class="logo">
+      <img src="images/logo.png" alt="Palvi Delights" class="logo-img">
+    </div>
+    <nav class="links">
+      <a href="#packaging">Packaging</a>
+      <a href="#about">About</a>
+      <a href="#products">Premixes</a>
+      <a href="#why">Why Us</a>
+      <a href="#order">Enquire</a>
+    </nav>
+    <a class="btn ghost-desktop" id="navWaBtn" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm0 18a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3 .79.8-2.92-.19-.3A7.95 7.95 0 1 1 12 20Zm4.38-5.96c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.46-.39-.4-.54-.41-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.57.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28Z"/></svg>
+      Chat on WhatsApp
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-ring"></div>
+  <div class="wrap">
+    <div class="hero-copy reveal">
+      <span class="eyebrow">From our mill in Sambhajinagar</span>
+      <h1>Ghar jaisa swaad,<br><em>ab instant.</em></h1>
+      <p class="lead">Traditional Maharashtrian recipes — idli, thalipith, dhokla, dal baati — stone-milled fresh, packed in small batches, and ready in minutes. No shortcuts on taste, no added preservatives.</p>
+      <div class="hero-ctas">
+        <a class="btn" id="heroWaBtn" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm0 18a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3 .79.8-2.92-.19-.3A7.95 7.95 0 1 1 12 20Zm4.38-5.96c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.46-.39-.4-.54-.41-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.57.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28Z"/></svg>
+          Order on WhatsApp
+        </a>
+        <a class="btn ghost" href="#products">See our premixes</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="thali-frame">
+        <div class="inner"><img src="images/idli.jpg" alt="Freshly steamed idlis made from Palvi Idli Pith, served with chutney and sambar on a brass thali"></div>
+        <div class="hero-badge">FSSAI<br><span>Certified Mill</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="showcase">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Fan favourites</span>
+      <h2>What's cooking today</h2>
+      <p>A quick look at our most-loved premixes, fresh off the tawa and the steamer.</p>
+    </div>
+    <div class="carousel reveal">
+      <div class="carousel-frame">
+        <div class="mask" id="carouselMask">
+          <div class="slide active"><img src="images/dhokla.jpg" alt="Dhokla Premix prepared and plated"></div>
+          <div class="slide"><img src="images/dalbatti.jpg" alt="Dal Batti Premix prepared and plated"></div>
+          <div class="slide"><img src="images/thalipith.jpg" alt="Multigrain Thalipith Bhajni prepared and plated"></div>
+          <div class="slide slide-idli"><img src="images/idli_fresh.jpg" alt="Idli Pith idlis served with sambar"></div>
+          <div class="slide"><img src="images/dalbatti_fresh.jpg" alt="Dal Batti Premix served with dal, onion and lime"></div>
+          <div class="slide"><img src="images/thalipith_fresh.jpg" alt="Multigrain Thalipith Bhajni served with curd and chutneys"></div>
+        </div>
+      </div>
+      <p class="carousel-caption" id="carouselCaption">Dhokla Premix</p>
+      <div class="carousel-dots" id="carouselDots">
+        <button class="dot active" data-i="0" aria-label="Show Dhokla Premix"></button>
+        <button class="dot" data-i="1" aria-label="Show Dal Batti Premix"></button>
+        <button class="dot" data-i="2" aria-label="Show Multigrain Thalipith Bhajni"></button>
+        <button class="dot" data-i="3" aria-label="Show Idli Pith"></button>
+        <button class="dot" data-i="4" aria-label="Show Dal Batti Premix, second photo"></button>
+        <button class="dot" data-i="5" aria-label="Show Multigrain Thalipith Bhajni, second photo"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="packaging" id="packaging">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Straight off the shelf</span>
+      <h2>What you'll see in stores</h2>
+      <p>Our actual pack labels — ingredients, recipe and all — so you know exactly what you're picking up.</p>
+    </div>
+    <div class="pack-scroll">
+      <div class="pack-card"><img src="images/pack-idli.jpg" alt="Palvi Delights Idli Pith 500g pack label"></div>
+      <div class="pack-card"><img src="images/pack-thalipith.jpg" alt="Palvi Delights Multigrain Thalipith Bhajni 500g pack label"></div>
+      <div class="pack-card"><img src="images/pack-dhokla.jpg" alt="Palvi Delights Dhokla Premix 500g pack label"></div>
+      <div class="pack-card"><img src="images/pack-dalbatti.jpg" alt="Palvi Delights Dal Batti Premix 1kg pack label"></div>
+    </div>
+    <p class="pack-hint">Scroll sideways to see all four packs →</p>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-visual reveal">
+      <div class="leaf-frame"><img src="images/thalipith.jpg" alt="Multigrain thalipith cooked from Palvi Thalipith Bhajni, served with curd and chutney"></div>
+    </div>
+    <div class="about-copy reveal">
+      <span class="eyebrow">Our story</span>
+      <h2>A small mill, a big respect for the recipe</h2>
+      <p>Palvi Delights is made by Palvi Millmix in Chhatrapati Sambhajinagar, Maharashtra. We grind rice, dals and millets the way our own kitchens always have — then pack them into premixes so a proper idli, thalipith, dhokla or dal baati is minutes away, not hours. Nothing artificial goes in, and nothing of the original taste gets left out.</p>
+      <div class="about-stats">
+        <div class="stat"><b>4</b><span>Traditional Premixes</span></div>
+        <div class="stat"><b>0</b><span>Added Preservatives</span></div>
+        <div class="stat"><b>100%</b><span>FSSAI Certified</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="products" id="products">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">The range</span>
+      <h2>Four recipes, one shelf</h2>
+      <p>Tap a product to see the ingredients and method — or message us straight away to order.</p>
+    </div>
+    <div class="grid" id="productGrid"></div>
+  </div>
+</section>
+
+<section class="features" id="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" style="color:var(--brass-light)">Why Palvi</span>
+      <h2>Made the way it should be</h2>
+      <p>Small batches, real ingredients, honest labels.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg>
+        <h3>Easy to prepare</h3>
+        <p>Just add water or curd — no soaking, no fermenting, no guesswork.</p>
+      </div>
+      <div class="feat reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M4 6h16M4 18h10"/></svg>
+        <h3>No added preservatives</h3>
+        <p>Real rice, dal and millet — nothing artificial to fake the freshness.</p>
+      </div>
+      <div class="feat reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 3 6v6c0 5 4 9 9 10 5-1 9-5 9-10V6l-9-4Z"/><path d="m8.5 12 2.5 2.5L16 9"/></svg>
+        <h3>FSSAI certified</h3>
+        <p>Licence No. 21526044000462 — milled and packed under food safety standards.</p>
+      </div>
+      <div class="feat reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c4-3 7-6.5 7-10.5A7 7 0 0 0 5 10.5C5 14.5 8 18 12 21Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+        <h3>Authentic regional taste</h3>
+        <p>Recipes rooted in Maharashtra's own kitchens, not generalised for the mass market.</p>
+      </div>
+      <div class="feat reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13h16v2a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-2Z"/></svg>
+        <h3>Soft, fluffy results</h3>
+        <p>Balanced grain ratios so idlis stay soft and dhoklas stay spongy, every time.</p>
+      </div>
+      <div class="feat reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21v-4a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v4"/><circle cx="12" cy="7" r="4"/></svg>
+        <h3>Small-batch milled</h3>
+        <p>We mill and pack in small runs, close to home, so every pack is genuinely fresh.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="order-steps">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>From your phone to your kitchen</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h3>Pick your premix</h3>
+        <p>Browse the range above and decide what you're cooking this week.</p>
+        <span class="step-arrow">→</span>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <h3>Message us on WhatsApp</h3>
+        <p>Tell us the product and quantity — one tap sends it straight to us.</p>
+        <span class="step-arrow">→</span>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <h3>Confirm & get delivery</h3>
+        <p>We confirm price and delivery details with you over chat, then dispatch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="enquire" id="order">
+  <div class="wrap">
+    <div class="enquire-copy reveal">
+      <span class="eyebrow">Place an order</span>
+      <h2>Tell us what you need</h2>
+      <p class="lead">Fill this in and it opens WhatsApp with your order ready to send — nothing gets stored on our end, it goes straight to us.</p>
+    </div>
+    <form class="form-card reveal" id="enquiryForm">
+      <div class="form-row">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" placeholder="e.g. Anjali Patil" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone" placeholder="10-digit mobile number" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="product">Product</label>
+          <select id="product" required>
+            <option value="">Select a premix</option>
+            <option value="Idli Pith (500 g, ₹90)">Idli Pith — 500 g, ₹90</option>
+            <option value="Multigrain Thalipith Bhajni (500 g, ₹140)">Multigrain Thalipith Bhajni — 500 g, ₹140</option>
+            <option value="Dhokla Premix (500 g, ₹140)">Dhokla Premix — 500 g, ₹140</option>
+            <option value="Dal Batti Premix (1 kg, ₹160)">Dal Batti Premix — 1 kg, ₹160</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="qty">Quantity</label>
+          <input type="number" id="qty" min="1" value="1" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="address">Delivery address</label>
+          <input type="text" id="address" placeholder="City / area (full address on chat)">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="message">Anything else?</label>
+          <textarea id="message" placeholder="Optional note"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn form-submit">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm0 18a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3 .79.8-2.92-.19-.3A7.95 7.95 0 1 1 12 20Zm4.38-5.96c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.46-.39-.4-.54-.41-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.57.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28Z"/></svg>
+        Send order on WhatsApp
+      </button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo-wrap"><img src="images/logo.png" alt="Palvi Delights"></div>
+        <p>Instant to Traditional — Taste in Every Bite. Made by Palvi Millmix, Chhatrapati Sambhajinagar, Maharashtra – 431001.</p>
+        <p>FSSAI Lic. No.: 21526044000462</p>
+        <div class="socials">
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.5-3H13.5V8.4c0-.87.24-1.46 1.5-1.46H16.6V4.3C16.3 4.26 15.3 4.17 14.16 4.17c-2.4 0-4.04 1.46-4.04 4.15v2.33H7.6v3H10.1V21h3.4Z"/></svg></a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
+          <a href="#" id="footWaBtn" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm0 18a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3 .79.8-2.92-.19-.3A7.95 7.95 0 1 1 12 20Zm4.38-5.96c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.46-.39-.4-.54-.41-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.57.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28Z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a class="foot-link" href="#about">About us</a>
+        <a class="foot-link" href="#products">Our premixes</a>
+        <a class="foot-link" href="#why">Why choose us</a>
+        <a class="foot-link" href="#order">Place an order</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <p>+91 94049 96803</p>
+        <p>Chhatrapati Sambhajinagar,<br>Maharashtra, India – 431001</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Palvi Millmix. All rights reserved.</span>
+      <span>Instant to Traditional — Taste in Every Bite!</span>
+    </div>
+  </div>
+</footer>
+
+<a class="float-wa" id="floatWaBtn" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm0 18a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3 .79.8-2.92-.19-.3A7.95 7.95 0 1 1 12 20Zm4.38-5.96c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.46-.39-.4-.54-.41-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.57.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28Z"/></svg>
+</a>
+
+<script>
+  const WA_NUMBER = "919404996803";
+
+  function waLink(text){
+    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+  }
+
+  // generic buttons
+  const genericMsg = "Hi, I'm interested in your Palvi Delights products. Could you share more details?";
+  ["navWaBtn","heroWaBtn","floatWaBtn","footWaBtn"].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.href = waLink(genericMsg);
+  });
+
+  // ---- product data ----
+  const products = [
+    {
+      name: "Dhokla Premix",
+      pack: "500 g",
+      price: "₹140",
+      img: "images/dhokla.jpg",
+      bestseller: true,
+      desc: "Extra soft, spongy dhoklas with an authentic taste — steam and serve in under half an hour.",
+      ingredients: ["Rice Flour","Chana Dal","Citric Acid","and more"],
+      recipe: [
+        "Take 1 cup premix in a bowl, add 1 cup water and mix well (no lumps).",
+        "Rest for 10 minutes.",
+        "Steam for 15–20 minutes.",
+        "Temper with mustard seeds and curry leaves, and serve hot."
+      ]
+    },
+    {
+      name: "Dal Batti Premix",
+      pack: "1 kg",
+      price: "₹160",
+      img: "images/dalbatti.jpg",
+      bestseller: true,
+      desc: "Pure Maharashtrian dal-batti taste — crispy on the outside, soft inside, best with hot dal and ghee.",
+      ingredients: ["Wheat","Corn","Carom Seeds / Ajwain","Sesame Seeds / Til","Salt","Baking Soda"],
+      recipe: [
+        "Mix 2 cups premix with 2 tbsp hot ghee and enough lukewarm water to make a firm dough.",
+        "Shape into medium-sized battis.",
+        "Steam for 15–20 minutes.",
+        "Deep-fry until golden brown and crispy.",
+        "Lightly crack the hot battis, drizzle with pure ghee, serve with hot dal or amti."
+      ]
+    },
+    {
+      name: "Idli Pith",
+      pack: "500 g",
+      price: "₹90",
+      img: "images/idli.jpg",
+      desc: "Soft, fluffy idlis in minutes — just add curd, water and a short rest. No fermentation guesswork.",
+      ingredients: ["Rice","Urad Dal / Black Gram (skinless)","Flattened Rice","Fenugreek Seeds"],
+      recipe: [
+        "Mix 2 cups of premix with 1 cup curd, 1 cup water and salt.",
+        "Let it rest for 30–40 minutes.",
+        "Just before steaming, add 1 tsp Eno or soda, mix gently, pour into greased moulds.",
+        "Steam for 12–15 minutes."
+      ]
+    },
+    {
+      name: "Multigrain Thalipith Bhajni",
+      pack: "500 g",
+      price: "₹140",
+      img: "images/thalipith.jpg",
+      desc: "Authentic Maharashtrian thalipith with six wholesome grains — a hearty, savoury breakfast in every bite.",
+      ingredients: ["Sorghum (Jowar)","Pearl Millet (Bajra)","Split Green Gram (Moong Dal)","Bengal Gram (Chana Dal)","Finger Millet (Ragi/Nachni)","Amaranth (Rajgira)","Rice","Wheat","Coriander Seeds","Cumin Seeds"],
+      recipe: [
+        "Mix 2 cups Thalipith Bhajni with chopped onion, coriander, salt, chilli powder, turmeric and a pinch of hing.",
+        "Add lukewarm water, knead into a soft dough, rest for 10 minutes.",
+        "Pat into a thin thalipith, make 3–4 holes, place on a lightly oiled medium-hot tawa.",
+        "Drizzle oil, cover and cook both sides until golden brown.",
+        "Serve hot with curd, butter, pickle or chutney."
+      ]
+    }
+  ];
+
+  const grid = document.getElementById("productGrid");
+  products.forEach(p=>{
+    const card = document.createElement("div");
+    card.className = "card reveal";
+    card.innerHTML = `
+      ${p.bestseller ? '<span class="bestseller-badge">★ Bestseller</span>' : ''}
+      <div class="card-media">
+        <div class="card-thali"><div class="inner"><img src="${p.img}" alt="${p.name} prepared and plated" loading="lazy"></div></div>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <h3>${p.name}</h3>
+          <span class="price">${p.price}</span>
+        </div>
+        <span class="pack">${p.pack} pack</span>
+        <p class="desc">${p.desc}</p>
+        <details>
+          <summary>Ingredients</summary>
+          <div class="content"><ul>${p.ingredients.map(i=>`<li>${i}</li>`).join("")}</ul></div>
+        </details>
+        <details>
+          <summary>How to prepare</summary>
+          <div class="content"><ol>${p.recipe.map(r=>`<li>${r}</li>`).join("")}</ol></div>
+        </details>
+        <div class="card-actions">
+          <a class="btn-sm" target="_blank" rel="noopener" href="${waLink(`Hi, I'd like to order ${p.name} (${p.pack}, ${p.price}). Quantity: `)}">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm0 18a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3 .79.8-2.92-.19-.3A7.95 7.95 0 1 1 12 20Zm4.38-5.96c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.46-.39-.4-.54-.41-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.57.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28Z"/></svg>
+            Enquire on WhatsApp
+          </a>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // ---- enquiry form -> WhatsApp ----
+  document.getElementById("enquiryForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const product = document.getElementById("product").value;
+    const qty = document.getElementById("qty").value;
+    const address = document.getElementById("address").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    let text = `Hi, I'd like to place an order on Palvi Delights.\n\n`;
+    text += `Name: ${name}\n`;
+    text += `Phone: ${phone}\n`;
+    text += `Product: ${product}\n`;
+    text += `Quantity: ${qty}\n`;
+    if(address) text += `Address: ${address}\n`;
+    if(message) text += `Note: ${message}\n`;
+
+    window.open(waLink(text), "_blank");
+  });
+
+  // ---- bestseller showcase carousel ----
+  const carouselNames = ["Dhokla Premix", "Dal Batti Premix", "Multigrain Thalipith Bhajni", "Idli Pith", "Dal Batti Premix", "Multigrain Thalipith Bhajni"];
+  const slides = document.querySelectorAll("#carouselMask .slide");
+  const dots = document.querySelectorAll("#carouselDots .dot");
+  const captionEl = document.getElementById("carouselCaption");
+  let slideIndex = 0;
+  let carouselTimer;
+
+  function showSlide(i){
+    slides.forEach(s=>s.classList.remove("active"));
+    dots.forEach(d=>d.classList.remove("active"));
+    slides[i].classList.add("active");
+    dots[i].classList.add("active");
+    captionEl.textContent = carouselNames[i];
+    slideIndex = i;
+  }
+
+  function nextSlide(){
+    showSlide((slideIndex+1) % slides.length);
+  }
+
+  function startCarousel(){
+    clearInterval(carouselTimer);
+    carouselTimer = setInterval(nextSlide, 3000);
+  }
+
+  dots.forEach(dot=>{
+    dot.addEventListener("click", ()=>{
+      showSlide(parseInt(dot.dataset.i, 10));
+      startCarousel();
+    });
+  });
+
+  if(slides.length){ startCarousel(); }
+
+  // ---- scroll reveal ----
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
