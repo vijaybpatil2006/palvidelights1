@@ -1,0 +1,90 @@
+{
+  "waNumber": "919404996803",
+  "phoneDisplay": "+91 94049 96803",
+  "addressLine1": "Chhatrapati Sambhajinagar,",
+  "addressLine2": "Maharashtra, India – 431001",
+  "counters": {
+    "families": 500,
+    "stores": 30,
+    "premixes": 4,
+    "quality": 100
+  },
+  "gallery": [
+    { "img": "images/pack-idli.jpg", "alt": "Palvi Delights Idli Pith 500g pack label" },
+    { "img": "images/pack-thalipith.jpg", "alt": "Palvi Delights Multigrain Thalipith Bhajni 500g pack label" },
+    { "img": "images/pack-dhokla.jpg", "alt": "Palvi Delights Dhokla Premix 500g pack label" },
+    { "img": "images/pack-dalbatti.jpg", "alt": "Palvi Delights Dal Batti Premix 1kg pack label" }
+  ],
+  "products": [
+    {
+      "name": "Dhokla Premix",
+      "pack": "500 g",
+      "price": "₹140",
+      "img": "images/dhokla.jpg",
+      "bestseller": true,
+      "desc": "Extra soft, spongy dhoklas with an authentic taste — steam and serve in under half an hour.",
+      "ingredients": ["Rice Flour", "Chana Dal", "Citric Acid", "and more"],
+      "recipe": [
+        "Take 1 cup premix in a bowl, add 1 cup water and mix well (no lumps).",
+        "Rest for 10 minutes.",
+        "Steam for 15–20 minutes.",
+        "Temper with mustard seeds and curry leaves, and serve hot."
+      ]
+    },
+    {
+      "name": "Dal Batti Premix",
+      "pack": "1 kg",
+      "price": "₹160",
+      "img": "images/dalbatti.jpg",
+      "bestseller": true,
+      "desc": "Pure Maharashtrian dal-batti taste — crispy on the outside, soft inside, best with hot dal and ghee.",
+      "ingredients": ["Wheat", "Corn", "Carom Seeds / Ajwain", "Sesame Seeds / Til", "Salt", "Baking Soda"],
+      "recipe": [
+        "Mix 2 cups premix with 2 tbsp hot ghee and enough lukewarm water to make a firm dough.",
+        "Shape into medium-sized battis.",
+        "Steam for 15–20 minutes.",
+        "Deep-fry until golden brown and crispy.",
+        "Lightly crack the hot battis, drizzle with pure ghee, serve with hot dal or amti."
+      ]
+    },
+    {
+      "name": "Idli Pith",
+      "pack": "500 g",
+      "price": "₹90",
+      "img": "images/idli.jpg",
+      "bestseller": false,
+      "desc": "Soft, fluffy idlis in minutes — just add curd, water and a short rest. No fermentation guesswork.",
+      "ingredients": ["Rice", "Urad Dal / Black Gram (skinless)", "Flattened Rice", "Fenugreek Seeds"],
+      "recipe": [
+        "Mix 2 cups of premix with 1 cup curd, 1 cup water and salt.",
+        "Let it rest for 30–40 minutes.",
+        "Just before steaming, add 1 tsp Eno or soda, mix gently, pour into greased moulds.",
+        "Steam for 12–15 minutes."
+      ]
+    },
+    {
+      "name": "Multigrain Thalipith Bhajni",
+      "pack": "500 g",
+      "price": "₹140",
+      "img": "images/thalipith.jpg",
+      "bestseller": false,
+      "desc": "Authentic Maharashtrian thalipith with six wholesome grains — a hearty, savoury breakfast in every bite.",
+      "ingredients": ["Sorghum (Jowar)", "Pearl Millet (Bajra)", "Split Green Gram (Moong Dal)", "Bengal Gram (Chana Dal)", "Finger Millet (Ragi/Nachni)", "Amaranth (Rajgira)", "Rice", "Wheat", "Coriander Seeds", "Cumin Seeds"],
+      "recipe": [
+        "Mix 2 cups Thalipith Bhajni with chopped onion, coriander, salt, chilli powder, turmeric and a pinch of hing.",
+        "Add lukewarm water, knead into a soft dough, rest for 10 minutes.",
+        "Pat into a thin thalipith, make 3–4 holes, place on a lightly oiled medium-hot tawa.",
+        "Drizzle oil, cover and cook both sides until golden brown.",
+        "Serve hot with curd, butter, pickle or chutney."
+      ]
+    }
+  ],
+  "reviews": [
+    { "name": "Anjali Patil", "city": "Pune", "text": "The idli premix makes incredibly soft idlis every single time.", "img": "" },
+    { "name": "Mahesh Shah", "city": "Ahmedabad", "text": "We started keeping Palvi Delights in our grocery shop. Customers love the Dhokla Premix.", "img": "" },
+    { "name": "Neha Kulkarni", "city": "Nashik", "text": "The Thalipith Bhajni tastes exactly like homemade.", "img": "" },
+    { "name": "Rakesh Jain", "city": "Chhatrapati Sambhajinagar", "text": "Fresh ingredients and excellent packaging.", "img": "" },
+    { "name": "Priya Deshmukh", "city": "Mumbai", "text": "My children love the Dhokla Premix.", "img": "" },
+    { "name": "Suresh Patel", "city": "Vadodara", "text": "Excellent quality. Looking forward to more products.", "img": "" }
+  ]
+}

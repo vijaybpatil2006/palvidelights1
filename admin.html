@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Palvi Delights — Admin Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #F6EEDC;
+    --cream-card: #FFFBF3;
+    --maroon: #7A1F2B;
+    --maroon-deep: #5A1620;
+    --green: #1B4332;
+    --brass: #B8863B;
+    --brass-light: #D9B36C;
+    --ink: #2B2118;
+    --ink-soft: #5A4F42;
+    --line: #E4D6B8;
+    --shadow: 0 12px 30px rgba(90, 22, 32, 0.10);
+    --danger: #B3261E;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--cream); color:var(--ink);
+    font-family:'Work Sans', sans-serif; font-size:15px; line-height:1.55;
+  }
+  h1,h2,h3{font-family:'Fraunces', serif; margin:0; color:var(--maroon-deep);}
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  /* ---- login gate ---- */
+  #loginGate{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:var(--cream); padding:24px;
+  }
+  .login-card{
+    background:var(--cream-card); border:1px solid var(--line); border-radius:20px;
+    box-shadow:var(--shadow); padding:40px 36px; max-width:380px; width:100%; text-align:center;
+  }
+  .login-card h1{font-size:1.7rem; margin-bottom:6px;}
+  .login-card p{color:var(--ink-soft); font-size:.88rem; margin:8px 0 22px;}
+  .login-card input{
+    width:100%; padding:12px 14px; border-radius:10px; border:1.5px solid var(--line);
+    background:var(--cream); font-size:1rem; margin-bottom:14px; outline:none;
+  }
+  .login-card input:focus{border-color:var(--brass);}
+  .login-error{color:var(--danger); font-size:.85rem; min-height:1.2em; margin-bottom:6px;}
+  .note{
+    font-size:.78rem; color:var(--ink-soft); background:rgba(184,134,59,.1);
+    border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-top:16px; text-align:left;
+  }
+
+  /* ---- shell ---- */
+  #adminShell{display:none;}
+  header.admin-head{
+    position:sticky; top:0; z-index:20; background:rgba(246,238,220,.95);
+    backdrop-filter:blur(6px); border-bottom:1px solid var(--line);
+  }
+  .admin-head .wrap{display:flex; align-items:center; justify-content:space-between; padding:16px 24px;}
+  .admin-title{font-family:'Fraunces',serif; font-weight:700; font-style:italic; color:var(--maroon); font-size:1.35rem;}
+  .admin-title span{font-family:'Work Sans',sans-serif; font-weight:600; font-style:normal; font-size:.8rem; color:var(--green); text-transform:uppercase; letter-spacing:.08em; display:block; margin-top:2px;}
+  .head-actions{display:flex; gap:10px; flex-wrap:wrap;}
+
+  .btn{
+    display:inline-flex; align-items:center; gap:7px;
+    background:var(--green); color:#fff; border:none; cursor:pointer;
+    padding:10px 18px; border-radius:999px; font-weight:600; font-size:.88rem;
+    box-shadow:0 8px 18px rgba(27,67,50,.2); transition:transform .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn.brass{background:var(--brass); color:#3a2a0d; box-shadow:0 8px 18px rgba(184,134,59,.3);}
+  .btn.ghost{background:transparent; color:var(--maroon-deep); border:1.5px solid var(--maroon-deep); box-shadow:none;}
+  .btn.danger{background:var(--danger); box-shadow:0 8px 18px rgba(179,38,30,.25);}
+  .btn.sm{padding:7px 13px; font-size:.8rem;}
+
+  .status-banner{
+    background:var(--green); color:#fff; text-align:center; font-size:.85rem; font-weight:600;
+    padding:8px 12px; display:none;
+  }
+  .status-banner.show{display:block;}
+  .status-banner.warn{background:var(--danger);}
+
+  /* ---- tabs ---- */
+  .tabs{display:flex; gap:8px; padding:20px 0 0; flex-wrap:wrap;}
+  .tab-btn{
+    background:var(--cream-card); border:1.5px solid var(--line); color:var(--ink-soft);
+    padding:10px 18px; border-radius:999px 999px 0 0; font-weight:600; font-size:.9rem; cursor:pointer;
+    border-bottom:none; position:relative; top:1px;
+  }
+  .tab-btn.active{background:var(--cream); color:var(--maroon-deep); border-color:var(--brass); border-bottom:1px solid var(--cream);}
+  .tab-panel{display:none; padding:26px 0 60px;}
+  .tab-panel.active{display:block;}
+
+  .panel-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap; gap:10px;}
+  .panel-head h2{font-size:1.5rem;}
+  .panel-head p{color:var(--ink-soft); font-size:.88rem; margin-top:4px;}
+
+  /* ---- item cards (products/reviews) ---- */
+  .item-list{display:flex; flex-direction:column; gap:14px;}
+  .item-card{
+    background:var(--cream-card); border:1px solid var(--line); border-radius:16px;
+    padding:18px 22px; box-shadow:var(--shadow); display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
+  }
+  .item-card .item-info b{font-family:'Fraunces',serif; color:var(--maroon-deep); font-size:1.05rem; display:block;}
+  .item-card .item-info span{color:var(--ink-soft); font-size:.85rem;}
+  .item-card .item-actions{display:flex; gap:8px;}
+  .badge{
+    display:inline-block; background:var(--brass); color:#3a2a0d; font-size:.68rem; font-weight:700;
+    padding:2px 9px; border-radius:999px; margin-left:8px; vertical-align:middle;
+  }
+
+  /* ---- forms ---- */
+  .form-card{
+    background:var(--cream-card); border:1px solid var(--line); border-radius:18px;
+    padding:26px; box-shadow:var(--shadow); margin-top:18px;
+  }
+  .form-card h3{font-size:1.15rem; margin-bottom:16px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:14px;}
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field.full{grid-column:1/-1;}
+  label{font-size:.8rem; font-weight:600; color:var(--maroon-deep);}
+  label small{font-weight:400; color:var(--ink-soft); text-transform:none; letter-spacing:0;}
+  input[type=text], input[type=number], input[type=tel], textarea{
+    font-family:'Work Sans',sans-serif; font-size:.92rem;
+    padding:10px 12px; border-radius:9px; border:1.5px solid var(--line);
+    background:var(--cream); color:var(--ink); outline:none; width:100%;
+  }
+  input:focus, textarea:focus{border-color:var(--brass);}
+  textarea{resize:vertical; min-height:70px;}
+  .checkbox-row{display:flex; align-items:center; gap:8px;}
+  .checkbox-row input{width:auto;}
+  .form-actions{display:flex; gap:10px; margin-top:6px; flex-wrap:wrap;}
+
+  .empty-state{
+    text-align:center; padding:40px 20px; color:var(--ink-soft); border:1.5px dashed var(--line);
+    border-radius:16px; font-size:.92rem;
+  }
+
+  .counter-grid-admin{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+
+  /* ---- image upload ---- */
+  .img-upload-row{display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap;}
+  .img-preview{
+    width:140px; height:140px; border-radius:12px; border:1.5px solid var(--line);
+    background:var(--cream) center/cover no-repeat; flex:none;
+    display:flex; align-items:center; justify-content:center; color:var(--ink-soft); font-size:.75rem; text-align:center; overflow:hidden;
+  }
+  .img-upload-controls{flex:1; min-width:220px; display:flex; flex-direction:column; gap:10px;}
+  .file-btn{
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer; width:fit-content;
+    background:var(--cream); border:1.5px dashed var(--brass); color:var(--maroon-deep);
+    padding:9px 16px; border-radius:9px; font-size:.85rem; font-weight:600;
+  }
+  .file-btn input{display:none;}
+  .upload-hint{font-size:.76rem; color:var(--ink-soft);}
+
+  /* ---- gallery tab ---- */
+  .gallery-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:16px;}
+  .gallery-item{
+    background:var(--cream-card); border:1px solid var(--line); border-radius:14px; overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .gallery-item img{width:100%; height:150px; object-fit:cover; display:block; background:var(--cream);}
+  .gallery-item .gi-body{padding:10px 12px 12px;}
+  .gallery-item .gi-body span{font-size:.78rem; color:var(--ink-soft); display:block; margin-bottom:8px; min-height:2.2em;}
+  .gallery-item .gi-actions{display:flex; gap:6px;}
+
+  @media (max-width:900px){
+    .form-row{grid-template-columns:1fr;}
+    .counter-grid-admin{grid-template-columns:1fr 1fr;}
+    .item-card{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN GATE ============ -->
+<div id="loginGate">
+  <div class="login-card">
+    <h1>Palvi Delights</h1>
+    <p>Admin panel — sign in to manage products, reviews and site info.</p>
+    <input type="text" id="loginPassword" placeholder="Admin password" autocomplete="off">
+    <div class="login-error" id="loginError"></div>
+    <button class="btn" style="width:100%; justify-content:center;" onclick="tryLogin()">Sign in</button>
+    <div class="note">
+      Default password: <b>palvi2026</b> (change it in the <code>ADMIN_PASSWORD</code> constant near the top of this file's script before you go live). This is a simple client-side lock, not real server security — don't share this admin.html link publicly.
+    </div>
+  </div>
+</div>
+
+<!-- ============ ADMIN SHELL ============ -->
+<div id="adminShell">
+  <div class="status-banner" id="statusBanner"></div>
+  <header class="admin-head">
+    <div class="wrap">
+      <div class="admin-title">Palvi Delights <span>Admin Panel</span></div>
+      <div class="head-actions">
+        <a class="btn ghost sm" href="index.html" target="_blank" rel="noopener">Preview site ↗</a>
+        <button class="btn brass sm" onclick="downloadDataJson()">⬇ Download data.json</button>
+        <button class="btn ghost sm" onclick="resetToLoaded()">Reset changes</button>
+        <button class="btn ghost sm" onclick="logout()">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="note" style="margin-top:20px;">
+      <b>How this works:</b> edits here save to a draft in this browser as you go, so you don't lose work if you close the tab.
+      The live site (<code>index.html</code>) never reads this draft — it only ever shows what's actually published in <code>data.json</code>.
+      Once you're happy with your changes, click <b>Download data.json</b> and upload that file to your hosting, replacing the existing
+      <code>data.json</code> next to <code>index.html</code>. That upload step is what makes changes visible to every visitor, on every device.
+    </div>
+
+    <div class="note" id="draftPrompt" style="display:none; margin-top:14px; border-color:var(--brass); background:rgba(184,134,59,.16); align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:220px;">
+        <b>Unsaved draft found in this browser.</b> This looks like it's from a previous editing session that wasn't downloaded yet. Restore it to keep working on it, or discard it to start fresh from the published <code>data.json</code>.
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn sm" onclick="restoreDraft()">Restore draft</button>
+        <button class="btn danger sm" onclick="discardDraft()">Discard it</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="products">Products</button>
+      <button class="tab-btn" data-tab="gallery">Gallery Images</button>
+      <button class="tab-btn" data-tab="reviews">Reviews</button>
+      <button class="tab-btn" data-tab="settings">Counters &amp; Contact</button>
+    </div>
+
+    <!-- ---------------- PRODUCTS TAB ---------------- -->
+    <div class="tab-panel active" id="tab-products">
+      <div class="panel-head">
+        <div>
+          <h2>Products</h2>
+          <p>These are the premix cards shown in the "Four recipes, one shelf" section.</p>
+        </div>
+        <button class="btn" onclick="openProductForm()">+ Add product</button>
+      </div>
+      <div class="item-list" id="productList"></div>
+      <div class="form-card" id="productForm" style="display:none;"></div>
+    </div>
+
+    <!-- ---------------- GALLERY TAB ---------------- -->
+    <div class="tab-panel" id="tab-gallery">
+      <div class="panel-head">
+        <div>
+          <h2>Gallery images</h2>
+          <p>The scrollable pack-shot gallery ("What you'll see in stores") right under the homepage carousel.</p>
+        </div>
+        <button class="btn" onclick="openGalleryForm()">+ Add image</button>
+      </div>
+      <div class="gallery-grid" id="galleryGrid"></div>
+      <div class="form-card" id="galleryForm" style="display:none;"></div>
+    </div>
+
+    <!-- ---------------- REVIEWS TAB ---------------- -->
+    <div class="tab-panel" id="tab-reviews">
+      <div class="panel-head">
+        <div>
+          <h2>Customer reviews</h2>
+          <p>Shown in the "What Our Customers Say" section. All reviews display 5 stars.</p>
+        </div>
+        <button class="btn" onclick="openReviewForm()">+ Add review</button>
+      </div>
+      <div class="item-list" id="reviewList"></div>
+      <div class="form-card" id="reviewForm" style="display:none;"></div>
+    </div>
+
+    <!-- ---------------- SETTINGS TAB ---------------- -->
+    <div class="tab-panel" id="tab-settings">
+      <div class="panel-head">
+        <div>
+          <h2>Counters &amp; contact info</h2>
+          <p>Homepage stat counters, WhatsApp number and footer contact details.</p>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Social proof counters</h3>
+        <div class="counter-grid-admin">
+          <div class="field">
+            <label for="cFamilies">Happy Families</label>
+            <input type="number" id="cFamilies" min="0">
+          </div>
+          <div class="field">
+            <label for="cStores">Retail Stores</label>
+            <input type="number" id="cStores" min="0">
+          </div>
+          <div class="field">
+            <label for="cPremixes">Traditional Premixes</label>
+            <input type="number" id="cPremixes" min="0">
+          </div>
+          <div class="field">
+            <label for="cQuality">Quality Checked (%)</label>
+            <input type="number" id="cQuality" min="0" max="100">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Contact details</h3>
+        <div class="form-row">
+          <div class="field">
+            <label for="sWaNumber">WhatsApp number <small>(country code + number, no + or spaces, e.g. 919404996803)</small></label>
+            <input type="text" id="sWaNumber">
+          </div>
+          <div class="field">
+            <label for="sPhoneDisplay">Phone number shown in footer</label>
+            <input type="text" id="sPhoneDisplay">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field full">
+            <label for="sAddress1">Address line 1</label>
+            <input type="text" id="sAddress1">
+          </div>
+          <div class="field full">
+            <label for="sAddress2">Address line 2</label>
+            <input type="text" id="sAddress2">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn" onclick="saveSettings()">Save counters &amp; contact info</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const ADMIN_PASSWORD = "palvi2026";
+  const DRAFT_KEY = "palviAdminDraft";
+
+  const DEFAULTS = {
+    waNumber: "919404996803",
+    phoneDisplay: "+91 94049 96803",
+    addressLine1: "Chhatrapati Sambhajinagar,",
+    addressLine2: "Maharashtra, India \u2013 431001",
+    counters: { families: 500, stores: 30, premixes: 4, quality: 100 },
+    gallery: [
+      { img: "images/pack-idli.jpg", alt: "Palvi Delights Idli Pith 500g pack label" },
+      { img: "images/pack-thalipith.jpg", alt: "Palvi Delights Multigrain Thalipith Bhajni 500g pack label" },
+      { img: "images/pack-dhokla.jpg", alt: "Palvi Delights Dhokla Premix 500g pack label" },
+      { img: "images/pack-dalbatti.jpg", alt: "Palvi Delights Dal Batti Premix 1kg pack label" }
+    ],
+    products: [
+      {
+        name: "Dhokla Premix", pack: "500 g", price: "\u20b9140", img: "images/dhokla.jpg", bestseller: true,
+        desc: "Extra soft, spongy dhoklas with an authentic taste \u2014 steam and serve in under half an hour.",
+        ingredients: ["Rice Flour","Chana Dal","Citric Acid","and more"],
+        recipe: [
+          "Take 1 cup premix in a bowl, add 1 cup water and mix well (no lumps).",
+          "Rest for 10 minutes.",
+          "Steam for 15\u201320 minutes.",
+          "Temper with mustard seeds and curry leaves, and serve hot."
+        ]
+      },
+      {
+        name: "Dal Batti Premix", pack: "1 kg", price: "\u20b9160", img: "images/dalbatti.jpg", bestseller: true,
+        desc: "Pure Maharashtrian dal-batti taste \u2014 crispy on the outside, soft inside, best with hot dal and ghee.",
+        ingredients: ["Wheat","Corn","Carom Seeds / Ajwain","Sesame Seeds / Til","Salt","Baking Soda"],
+        recipe: [
+          "Mix 2 cups premix with 2 tbsp hot ghee and enough lukewarm water to make a firm dough.",
+          "Shape into medium-sized battis.",
+          "Steam for 15\u201320 minutes.",
+          "Deep-fry until golden brown and crispy.",
+          "Lightly crack the hot battis, drizzle with pure ghee, serve with hot dal or amti."
+        ]
+      },
+      {
+        name: "Idli Pith", pack: "500 g", price: "\u20b990", img: "images/idli.jpg", bestseller: false,
+        desc: "Soft, fluffy idlis in minutes \u2014 just add curd, water and a short rest. No fermentation guesswork.",
+        ingredients: ["Rice","Urad Dal / Black Gram (skinless)","Flattened Rice","Fenugreek Seeds"],
+        recipe: [
+          "Mix 2 cups of premix with 1 cup curd, 1 cup water and salt.",
+          "Let it rest for 30\u201340 minutes.",
+          "Just before steaming, add 1 tsp Eno or soda, mix gently, pour into greased moulds.",
+          "Steam for 12\u201315 minutes."
+        ]
+      },
+      {
+        name: "Multigrain Thalipith Bhajni", pack: "500 g", price: "\u20b9140", img: "images/thalipith.jpg", bestseller: false,
+        desc: "Authentic Maharashtrian thalipith with six wholesome grains \u2014 a hearty, savoury breakfast in every bite.",
+        ingredients: ["Sorghum (Jowar)","Pearl Millet (Bajra)","Split Green Gram (Moong Dal)","Bengal Gram (Chana Dal)","Finger Millet (Ragi/Nachni)","Amaranth (Rajgira)","Rice","Wheat","Coriander Seeds","Cumin Seeds"],
+        recipe: [
+          "Mix 2 cups Thalipith Bhajni with chopped onion, coriander, salt, chilli powder, turmeric and a pinch of hing.",
+          "Add lukewarm water, knead into a soft dough, rest for 10 minutes.",
+          "Pat into a thin thalipith, make 3\u20134 holes, place on a lightly oiled medium-hot tawa.",
+          "Drizzle oil, cover and cook both sides until golden brown.",
+          "Serve hot with curd, butter, pickle or chutney."
+        ]
+      }
+    ],
+    reviews: [
+      { name: "Anjali Patil", city: "Pune", text: "The idli premix makes incredibly soft idlis every single time.", img: "" },
+      { name: "Mahesh Shah", city: "Ahmedabad", text: "We started keeping Palvi Delights in our grocery shop. Customers love the Dhokla Premix.", img: "" },
+      { name: "Neha Kulkarni", city: "Nashik", text: "The Thalipith Bhajni tastes exactly like homemade.", img: "" },
+      { name: "Rakesh Jain", city: "Chhatrapati Sambhajinagar", text: "Fresh ingredients and excellent packaging.", img: "" },
+      { name: "Priya Deshmukh", city: "Mumbai", text: "My children love the Dhokla Premix.", img: "" },
+      { name: "Suresh Patel", city: "Vadodara", text: "Excellent quality. Looking forward to more products.", img: "" }
+    ]
+  };
+
+  let DATA = null;
+
+  // ---------------- login ----------------
+  function tryLogin(){
+    const val = document.getElementById("loginPassword").value;
+    if(val === ADMIN_PASSWORD){
+      sessionStorage.setItem("palviAdminAuthed", "1");
+      showShell();
+    }else{
+      document.getElementById("loginError").textContent = "Incorrect password. Try again.";
+    }
+  }
+  document.getElementById("loginPassword").addEventListener("keydown", e=>{
+    if(e.key === "Enter") tryLogin();
+  });
+  function logout(){
+    sessionStorage.removeItem("palviAdminAuthed");
+    document.getElementById("adminShell").style.display = "none";
+    document.getElementById("loginGate").style.display = "flex";
+  }
+  function showShell(){
+    document.getElementById("loginGate").style.display = "none";
+    document.getElementById("adminShell").style.display = "block";
+    loadData();
+  }
+
+  // ---------------- data loading ----------------
+  // Always load the real published data.json (or a safe built-in backup) as the
+  // baseline that's shown immediately. A leftover draft from a previous session
+  // is never applied automatically — it's offered separately, and only used if
+  // you explicitly choose to restore it.
+  async function loadData(){
+    let loadedOk = false;
+    try{
+      const res = await fetch("data.json", {cache:"no-store"});
+      if(res.ok){
+        DATA = await res.json();
+        loadedOk = true;
+      }else{
+        DATA = JSON.parse(JSON.stringify(DEFAULTS));
+      }
+    }catch(e){
+      DATA = JSON.parse(JSON.stringify(DEFAULTS));
+    }
+    normalizeData();
+    renderAll();
+
+    if(!loadedOk){
+      showStatus(
+        "⚠ Could not load data.json from this location — showing built-in backup content instead. " +
+        "If you were expecting your real, previously-saved products/reviews here and don't see them, " +
+        "do NOT click Download yet: check you opened admin.html the same way you'd open the live site " +
+        "(over http/https, from the same folder as data.json), not by double-clicking the file.",
+        true
+      );
+    }
+
+    checkForDraft();
+  }
+
+  function checkForDraft(){
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if(!raw) return;
+    try{
+      window._pendingDraft = JSON.parse(raw);
+      document.getElementById("draftPrompt").style.display = "flex";
+    }catch(e){
+      localStorage.removeItem(DRAFT_KEY);
+    }
+  }
+
+  function restoreDraft(){
+    if(window._pendingDraft){
+      DATA = window._pendingDraft;
+      normalizeData();
+      renderAll();
+      showStatus("Restored your unsaved draft from this browser.");
+    }
+    document.getElementById("draftPrompt").style.display = "none";
+  }
+
+  function discardDraft(){
+    localStorage.removeItem(DRAFT_KEY);
+    window._pendingDraft = null;
+    document.getElementById("draftPrompt").style.display = "none";
+    showStatus("Discarded the old draft — you're viewing data.json as published.");
+  }
+
+  // Fills in any fields missing from an older data.json so the panel never breaks.
+  function normalizeData(){
+    DATA.products = DATA.products || [];
+    DATA.reviews = DATA.reviews || [];
+    DATA.gallery = DATA.gallery || [];
+    DATA.counters = DATA.counters || { families:0, stores:0, premixes:0, quality:0 };
+    DATA.waNumber = DATA.waNumber || "";
+    DATA.phoneDisplay = DATA.phoneDisplay || "";
+    DATA.addressLine1 = DATA.addressLine1 || "";
+    DATA.addressLine2 = DATA.addressLine2 || "";
+  }
+
+  function saveDraft(){
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(DATA));
+  }
+
+  function resetToLoaded(){
+    if(!confirm("Discard all unsaved changes in this browser and reload data.json from the server?")) return;
+    localStorage.removeItem(DRAFT_KEY);
+    loadData();
+    showStatus("Changes discarded.");
+  }
+
+  function showStatus(msg, persistent){
+    const el = document.getElementById("statusBanner");
+    el.textContent = msg;
+    el.classList.add("show");
+    el.classList.toggle("warn", !!persistent);
+    clearTimeout(showStatus._t);
+    if(!persistent){
+      showStatus._t = setTimeout(()=>el.classList.remove("show"), 4000);
+    }
+  }
+
+  function downloadDataJson(){
+    if(!DATA.products || DATA.products.length === 0){
+      const proceed = confirm(
+        "Your product list is currently empty. If you expected to see your existing products here, " +
+        "this data.json will WIPE them out when you upload it.\n\n" +
+        "Click Cancel and re-check how you opened admin.html (it should be served the same way as your " +
+        "live site, e.g. over http/https from the same folder as data.json — not opened by double-clicking the file).\n\n" +
+        "Click OK only if you really mean to publish an empty product list."
+      );
+      if(!proceed) return;
+    }
+    const blob = new Blob([JSON.stringify(DATA, null, 2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "data.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    showStatus("data.json downloaded — upload it to your hosting to make changes live.");
+  }
+
+  function renderAll(){
+    renderProductList();
+    renderGalleryList();
+    renderReviewList();
+    renderSettingsForm();
+  }
+
+  // ---------------- tabs ----------------
+  document.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+      document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+    });
+  });
+
+  // ================= PRODUCTS =================
+  function renderProductList(){
+    const list = document.getElementById("productList");
+    list.innerHTML = "";
+    if(!DATA.products.length){
+      list.innerHTML = '<div class="empty-state">No products yet. Click "+ Add product" to create one.</div>';
+      return;
+    }
+    DATA.products.forEach((p, i)=>{
+      const row = document.createElement("div");
+      row.className = "item-card";
+      row.innerHTML = `
+        <div class="item-info">
+          <b>${p.name}${p.bestseller ? '<span class="badge">Bestseller</span>' : ''}</b>
+          <span>${p.pack} &middot; ${p.price} &middot; ${p.img}</span>
+        </div>
+        <div class="item-actions">
+          <button class="btn ghost sm" onclick="openProductForm(${i})">Edit</button>
+          <button class="btn danger sm" onclick="deleteProduct(${i})">Delete</button>
+        </div>
+      `;
+      list.appendChild(row);
+    });
+  }
+
+  function openProductForm(index){
+    const editing = typeof index === "number";
+    const p = editing ? DATA.products[index] : {
+      name:"", pack:"500 g", price:"\u20b9", img:"images/", bestseller:false,
+      desc:"", ingredients:[], recipe:[]
+    };
+    const formEl = document.getElementById("productForm");
+    formEl.style.display = "block";
+    formEl.innerHTML = `
+      <h3>${editing ? "Edit product" : "Add product"}</h3>
+      <div class="form-row">
+        <div class="field">
+          <label for="pfName">Product name</label>
+          <input type="text" id="pfName" value="${escapeAttr(p.name)}">
+        </div>
+        <div class="field">
+          <label for="pfPack">Pack size</label>
+          <input type="text" id="pfPack" value="${escapeAttr(p.pack)}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="pfPrice">Price <small>(include \u20b9 symbol)</small></label>
+          <input type="text" id="pfPrice" value="${escapeAttr(p.price)}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label>Product photo</label>
+          <div class="img-upload-row">
+            <div class="img-preview" id="pfImgPreview" style="${p.img ? `background-image:url('${escapeAttr(p.img)}')` : ''}">${p.img ? "" : "No image yet"}</div>
+            <div class="img-upload-controls">
+              <label class="file-btn">
+                \ud83d\udcf7 Upload new photo
+                <input type="file" id="pfImgFile" accept="image/*" onchange="handleProductImageUpload(event)">
+              </label>
+              <div class="upload-hint">Uploaded photos are compressed and embedded directly in data.json — no separate file upload needed.</div>
+              <input type="text" id="pfImg" value="${escapeAttr(p.img)}" placeholder="or type an existing path, e.g. images/dhokla.jpg" oninput="updateImgPreview('pfImgPreview', this.value)">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full checkbox-row">
+          <input type="checkbox" id="pfBestseller" ${p.bestseller ? "checked" : ""}>
+          <label for="pfBestseller" style="margin:0;">Show "Bestseller" badge</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="pfDesc">Short description</label>
+          <textarea id="pfDesc">${escapeHtml(p.desc)}</textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="pfIngredients">Ingredients <small>(one per line)</small></label>
+          <textarea id="pfIngredients">${escapeHtml(p.ingredients.join("\\n"))}</textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="pfRecipe">How to prepare <small>(one step per line)</small></label>
+          <textarea id="pfRecipe" style="min-height:110px;">${escapeHtml(p.recipe.join("\\n"))}</textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" onclick="saveProduct(${editing ? index : -1})">Save product</button>
+        <button class="btn ghost" onclick="closeProductForm()">Cancel</button>
+      </div>
+    `;
+    formEl.scrollIntoView({behavior:"smooth", block:"center"});
+  }
+
+  function closeProductForm(){
+    document.getElementById("productForm").style.display = "none";
+  }
+
+  function saveProduct(index){
+    const newProduct = {
+      name: document.getElementById("pfName").value.trim(),
+      pack: document.getElementById("pfPack").value.trim(),
+      price: document.getElementById("pfPrice").value.trim(),
+      img: document.getElementById("pfImg").value.trim(),
+      bestseller: document.getElementById("pfBestseller").checked,
+      desc: document.getElementById("pfDesc").value.trim(),
+      ingredients: document.getElementById("pfIngredients").value.split("\\n").map(s=>s.trim()).filter(Boolean),
+      recipe: document.getElementById("pfRecipe").value.split("\\n").map(s=>s.trim()).filter(Boolean)
+    };
+    if(!newProduct.name){ alert("Product name is required."); return; }
+    if(index >= 0){ DATA.products[index] = newProduct; }
+    else{ DATA.products.push(newProduct); }
+    saveDraft();
+    renderProductList();
+    closeProductForm();
+    showStatus("Product saved to your draft. Download data.json to publish it.");
+  }
+
+  function deleteProduct(index){
+    if(!confirm(`Delete "${DATA.products[index].name}"?`)) return;
+    DATA.products.splice(index, 1);
+    saveDraft();
+    renderProductList();
+    showStatus("Product deleted from your draft.");
+  }
+
+  // ================= GALLERY IMAGES =================
+  function renderGalleryList(){
+    const grid = document.getElementById("galleryGrid");
+    grid.innerHTML = "";
+    if(!DATA.gallery || !DATA.gallery.length){
+      grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">No gallery images yet. Click "+ Add image" to upload one.</div>';
+      return;
+    }
+    DATA.gallery.forEach((g, i)=>{
+      const item = document.createElement("div");
+      item.className = "gallery-item";
+      item.innerHTML = `
+        <img src="${g.img}" alt="${escapeAttr(g.alt || "")}">
+        <div class="gi-body">
+          <span>${escapeHtml(g.alt || "No caption")}</span>
+          <div class="gi-actions">
+            <button class="btn ghost sm" onclick="openGalleryForm(${i})">Edit</button>
+            <button class="btn danger sm" onclick="deleteGalleryImage(${i})">Delete</button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(item);
+    });
+  }
+
+  function openGalleryForm(index){
+    const editing = typeof index === "number";
+    const g = editing ? DATA.gallery[index] : { img:"", alt:"" };
+    const formEl = document.getElementById("galleryForm");
+    formEl.style.display = "block";
+    formEl.innerHTML = `
+      <h3>${editing ? "Edit gallery image" : "Add gallery image"}</h3>
+      <div class="form-row">
+        <div class="field full">
+          <label>Photo</label>
+          <div class="img-upload-row">
+            <div class="img-preview" id="gfImgPreview" style="${g.img ? `background-image:url('${escapeAttr(g.img)}')` : ''}">${g.img ? "" : "No image yet"}</div>
+            <div class="img-upload-controls">
+              <label class="file-btn">
+                \ud83d\udcf7 Upload photo
+                <input type="file" id="gfImgFile" accept="image/*" onchange="handleGalleryImageUpload(event)">
+              </label>
+              <div class="upload-hint">Uploaded photos are compressed and embedded directly in data.json.</div>
+              <input type="text" id="gfImg" value="${escapeAttr(g.img)}" placeholder="or type an existing path, e.g. images/pack-idli.jpg" oninput="updateImgPreview('gfImgPreview', this.value)">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="gfAlt">Caption / alt text</label>
+          <input type="text" id="gfAlt" value="${escapeAttr(g.alt)}" placeholder="e.g. Palvi Delights Dhokla Premix 500g pack label">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" onclick="saveGalleryImage(${editing ? index : -1})">Save image</button>
+        <button class="btn ghost" onclick="closeGalleryForm()">Cancel</button>
+      </div>
+    `;
+    formEl.scrollIntoView({behavior:"smooth", block:"center"});
+  }
+
+  function closeGalleryForm(){
+    document.getElementById("galleryForm").style.display = "none";
+  }
+
+  async function handleGalleryImageUpload(evt){
+    const file = evt.target.files[0];
+    if(!file) return;
+    try{
+      const dataUrl = await compressImage(file);
+      document.getElementById("gfImg").value = dataUrl;
+      updateImgPreview("gfImgPreview", dataUrl);
+    }catch(err){
+      alert("Sorry, that image couldn't be processed. Try a different file.");
+    }
+  }
+
+  function saveGalleryImage(index){
+    const img = document.getElementById("gfImg").value.trim();
+    const alt = document.getElementById("gfAlt").value.trim();
+    if(!img){ alert("Please upload a photo or provide an image path."); return; }
+    const entry = { img, alt };
+    if(!DATA.gallery) DATA.gallery = [];
+    if(index >= 0){ DATA.gallery[index] = entry; }
+    else{ DATA.gallery.push(entry); }
+    saveDraft();
+    renderGalleryList();
+    closeGalleryForm();
+    showStatus("Gallery image saved to your draft. Download data.json to publish it.");
+  }
+
+  function deleteGalleryImage(index){
+    if(!confirm("Delete this gallery image?")) return;
+    DATA.gallery.splice(index, 1);
+    saveDraft();
+    renderGalleryList();
+    showStatus("Gallery image deleted from your draft.");
+  }
+
+  // ================= REVIEWS =================
+  function renderReviewList(){
+    const list = document.getElementById("reviewList");
+    list.innerHTML = "";
+    if(!DATA.reviews.length){
+      list.innerHTML = '<div class="empty-state">No reviews yet. Click "+ Add review" to create one.</div>';
+      return;
+    }
+    DATA.reviews.forEach((r, i)=>{
+      const row = document.createElement("div");
+      row.className = "item-card";
+      row.innerHTML = `
+        <div class="item-info" style="display:flex; gap:14px; align-items:center;">
+          ${r.img ? `<img src="${r.img}" alt="" style="width:52px; height:52px; border-radius:10px; object-fit:cover; border:1px solid var(--line); flex:none;">` : ''}
+          <div>
+            <b>${r.name} <span style="font-weight:400; color:var(--ink-soft); font-family:'Work Sans',sans-serif; font-size:.85rem;">&middot; ${r.city}</span></b>
+            <span>"${r.text}"</span>
+          </div>
+        </div>
+        <div class="item-actions">
+          <button class="btn ghost sm" onclick="openReviewForm(${i})">Edit</button>
+          <button class="btn danger sm" onclick="deleteReview(${i})">Delete</button>
+        </div>
+      `;
+      list.appendChild(row);
+    });
+  }
+
+  function openReviewForm(index){
+    const editing = typeof index === "number";
+    const r = editing ? DATA.reviews[index] : { name:"", city:"", text:"", img:"" };
+    const formEl = document.getElementById("reviewForm");
+    formEl.style.display = "block";
+    formEl.innerHTML = `
+      <h3>${editing ? "Edit review" : "Add review"}</h3>
+      <div class="form-row">
+        <div class="field">
+          <label for="rfName">Customer name</label>
+          <input type="text" id="rfName" value="${escapeAttr(r.name)}">
+        </div>
+        <div class="field">
+          <label for="rfCity">City</label>
+          <input type="text" id="rfCity" value="${escapeAttr(r.city)}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="rfText">Review text</label>
+          <textarea id="rfText">${escapeHtml(r.text)}</textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label>Photo <small>(optional — a screenshot of the review, or a photo the customer shared)</small></label>
+          <div class="img-upload-row">
+            <div class="img-preview" id="rfImgPreview" style="${r.img ? `background-image:url('${escapeAttr(r.img)}')` : ''}">${r.img ? "" : "No photo"}</div>
+            <div class="img-upload-controls">
+              <label class="file-btn">
+                \ud83d\udcf7 Upload photo
+                <input type="file" id="rfImgFile" accept="image/*" onchange="handleReviewImageUpload(event)">
+              </label>
+              <div class="upload-hint">Optional — leave empty for a text-only review. Uploaded photos are compressed and embedded directly in data.json.</div>
+              <input type="text" id="rfImg" value="${escapeAttr(r.img || "")}" placeholder="or type an existing path, e.g. images/review1.jpg" oninput="updateImgPreview('rfImgPreview', this.value)">
+              ${r.img ? `<button type="button" class="btn ghost sm" style="width:fit-content;" onclick="document.getElementById('rfImg').value=''; updateImgPreview('rfImgPreview','');">Remove photo</button>` : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" onclick="saveReview(${editing ? index : -1})">Save review</button>
+        <button class="btn ghost" onclick="closeReviewForm()">Cancel</button>
+      </div>
+    `;
+    formEl.scrollIntoView({behavior:"smooth", block:"center"});
+  }
+
+  function closeReviewForm(){
+    document.getElementById("reviewForm").style.display = "none";
+  }
+
+  async function handleReviewImageUpload(evt){
+    const file = evt.target.files[0];
+    if(!file) return;
+    try{
+      const dataUrl = await compressImage(file);
+      document.getElementById("rfImg").value = dataUrl;
+      updateImgPreview("rfImgPreview", dataUrl);
+    }catch(err){
+      alert("Sorry, that image couldn't be processed. Try a different file.");
+    }
+  }
+
+  function saveReview(index){
+    const newReview = {
+      name: document.getElementById("rfName").value.trim(),
+      city: document.getElementById("rfCity").value.trim(),
+      text: document.getElementById("rfText").value.trim(),
+      img: document.getElementById("rfImg").value.trim()
+    };
+    if(!newReview.name || !newReview.text){ alert("Name and review text are required."); return; }
+    if(index >= 0){ DATA.reviews[index] = newReview; }
+    else{ DATA.reviews.push(newReview); }
+    saveDraft();
+    renderReviewList();
+    closeReviewForm();
+    showStatus("Review saved to your draft. Download data.json to publish it.");
+  }
+
+  function deleteReview(index){
+    if(!confirm(`Delete review from "${DATA.reviews[index].name}"?`)) return;
+    DATA.reviews.splice(index, 1);
+    saveDraft();
+    renderReviewList();
+    showStatus("Review deleted from your draft.");
+  }
+
+  // ================= SETTINGS =================
+  function renderSettingsForm(){
+    document.getElementById("cFamilies").value = DATA.counters.families;
+    document.getElementById("cStores").value = DATA.counters.stores;
+    document.getElementById("cPremixes").value = DATA.counters.premixes;
+    document.getElementById("cQuality").value = DATA.counters.quality;
+    document.getElementById("sWaNumber").value = DATA.waNumber;
+    document.getElementById("sPhoneDisplay").value = DATA.phoneDisplay;
+    document.getElementById("sAddress1").value = DATA.addressLine1;
+    document.getElementById("sAddress2").value = DATA.addressLine2;
+  }
+
+  function saveSettings(){
+    DATA.counters.families = parseInt(document.getElementById("cFamilies").value, 10) || 0;
+    DATA.counters.stores = parseInt(document.getElementById("cStores").value, 10) || 0;
+    DATA.counters.premixes = parseInt(document.getElementById("cPremixes").value, 10) || 0;
+    DATA.counters.quality = parseInt(document.getElementById("cQuality").value, 10) || 0;
+    DATA.waNumber = document.getElementById("sWaNumber").value.trim();
+    DATA.phoneDisplay = document.getElementById("sPhoneDisplay").value.trim();
+    DATA.addressLine1 = document.getElementById("sAddress1").value.trim();
+    DATA.addressLine2 = document.getElementById("sAddress2").value.trim();
+    saveDraft();
+    showStatus("Counters & contact info saved to your draft. Download data.json to publish it.");
+  }
+
+  // ================= helpers =================
+  // ================= image helpers =================
+  function updateImgPreview(previewId, srcOrUrl){
+    const el = document.getElementById(previewId);
+    if(!el) return;
+    if(srcOrUrl){
+      el.style.backgroundImage = `url('${srcOrUrl}')`;
+      el.textContent = "";
+    }else{
+      el.style.backgroundImage = "";
+      el.textContent = "No image yet";
+    }
+  }
+
+  // Reads an image file, downsizes it and re-encodes as JPEG so it stays
+  // reasonably small once embedded as a data URL inside data.json.
+  function compressImage(file, maxDim = 1000, quality = 0.82){
+    return new Promise((resolve, reject)=>{
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error("Could not read file"));
+      reader.onload = () => {
+        const img = new Image();
+        img.onerror = () => reject(new Error("Could not decode image"));
+        img.onload = () => {
+          let { width, height } = img;
+          if(width > maxDim || height > maxDim){
+            const scale = maxDim / Math.max(width, height);
+            width = Math.round(width * scale);
+            height = Math.round(height * scale);
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, width, height);
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL("image/jpeg", quality));
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function handleProductImageUpload(evt){
+    const file = evt.target.files[0];
+    if(!file) return;
+    try{
+      const dataUrl = await compressImage(file);
+      document.getElementById("pfImg").value = dataUrl;
+      updateImgPreview("pfImgPreview", dataUrl);
+    }catch(err){
+      alert("Sorry, that image couldn't be processed. Try a different file.");
+    }
+  }
+
+  function escapeHtml(str){
+    return (str || "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+  }
+  function escapeAttr(str){ return escapeHtml(str); }
+
+  // ---------------- boot ----------------
+  if(sessionStorage.getItem("palviAdminAuthed") === "1"){
+    showShell();
+  }
+</script>
+
+</body>
+</html>
